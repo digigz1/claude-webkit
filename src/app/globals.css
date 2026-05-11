@@ -1,0 +1,356 @@
+@import "tailwindcss";
+
+/* ─── KILLERCLO DESIGN TOKENS ─────────────────────────────────────────────── */
+
+@theme inline {
+  /* Colors */
+  --color-background:       var(--background);
+  --color-surface:          var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-border-subtle:    var(--border-subtle);
+  --color-foreground:       var(--foreground);
+  --color-muted:            var(--muted);
+  --color-accent-blood:     var(--accent-blood);
+  --color-accent-gold:      var(--accent-gold);
+
+  /* Typography families */
+  --font-display: var(--font-anton), 'Anton', sans-serif;
+  --font-heading: var(--font-oswald), 'Oswald', sans-serif;
+  --font-body:    var(--font-inter), 'Inter', sans-serif;
+  --font-mono:    var(--font-jetbrains), 'JetBrains Mono', 'Courier New', monospace;
+
+  /* Font sizes — modular scale (1.25 ratio) */
+  --text-xs:   0.64rem;
+  --text-sm:   0.8rem;
+  --text-base: 1rem;
+  --text-lg:   1.25rem;
+  --text-xl:   1.563rem;
+  --text-2xl:  1.953rem;
+  --text-3xl:  2.441rem;
+  --text-4xl:  3.052rem;
+  --text-5xl:  3.815rem;
+  --text-6xl:  4.768rem;
+  --text-7xl:  5.96rem;
+
+  /* Letter spacing */
+  --tracking-tighter: -0.04em;
+  --tracking-tight:   -0.02em;
+  --tracking-normal:  0em;
+  --tracking-wide:    0.05em;
+  --tracking-wider:   0.1em;
+  --tracking-widest:  0.15em;
+
+  /* Border radius — near-zero, industrial */
+  --radius-none: 0px;
+  --radius-sm:   1px;
+  --radius:      2px;
+  --radius-md:   2px;
+  --radius-lg:   4px;
+  --radius-full: 9999px;
+
+  /* Spacing — 4pt grid */
+  --spacing-px:   1px;
+  --spacing-0:    0px;
+  --spacing-0-5:  2px;
+  --spacing-1:    4px;
+  --spacing-1-5:  6px;
+  --spacing-2:    8px;
+  --spacing-2-5:  10px;
+  --spacing-3:    12px;
+  --spacing-3-5:  14px;
+  --spacing-4:    16px;
+  --spacing-5:    20px;
+  --spacing-6:    24px;
+  --spacing-7:    28px;
+  --spacing-8:    32px;
+  --spacing-9:    36px;
+  --spacing-10:   40px;
+  --spacing-11:   44px;
+  --spacing-12:   48px;
+  --spacing-14:   56px;
+  --spacing-16:   64px;
+  --spacing-20:   80px;
+  --spacing-24:   96px;
+  --spacing-28:   112px;
+  --spacing-32:   128px;
+  --spacing-36:   144px;
+  --spacing-40:   160px;
+  --spacing-48:   192px;
+  --spacing-56:   224px;
+  --spacing-64:   256px;
+  --spacing-72:   288px;
+  --spacing-80:   320px;
+  --spacing-96:   384px;
+
+  /* Motion — dry, 120ms */
+  --animate-duration-instant: 80ms;
+  --animate-duration-fast:    120ms;
+  --animate-duration-normal:  200ms;
+  --animate-duration-slow:    350ms;
+  --animate-ease-in:          cubic-bezier(0.4, 0, 1, 1);
+  --animate-ease-out:         cubic-bezier(0, 0, 0.2, 1);
+  --animate-ease-in-out:      cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Shadows */
+  --shadow-sm:  0 1px 2px rgba(0,0,0,0.8);
+  --shadow:     0 2px 8px rgba(0,0,0,0.9);
+  --shadow-md:  0 4px 16px rgba(0,0,0,0.9);
+  --shadow-lg:  0 8px 32px rgba(0,0,0,0.95);
+  --shadow-xl:  0 16px 64px rgba(0,0,0,1);
+  --shadow-glow-blood: 0 0 24px rgba(225,6,0,0.4);
+  --shadow-glow-gold:  0 0 24px rgba(201,169,97,0.3);
+
+  /* Z-index scale */
+  --z-base:         0;
+  --z-raised:       10;
+  --z-dropdown:     100;
+  --z-sticky:       200;
+  --z-overlay:      300;
+  --z-modal:        400;
+  --z-toast:        500;
+  --z-tooltip:      600;
+}
+
+/* ─── CSS CUSTOM PROPERTIES ──────────────────────────────────────────────── */
+
+:root {
+  --background:       #000000;
+  --surface:          #0A0A0A;
+  --surface-elevated: #141414;
+  --border-subtle:    rgba(255, 255, 255, 0.08);
+  --foreground:       #FFFFFF;
+  --muted:            #8A8A8A;
+  --accent-blood:     #E10600;
+  --accent-gold:      #C9A961;
+
+  /* shadcn/ui semantic tokens mapped to KILLERCLO palette */
+  --card:             var(--surface);
+  --card-foreground:  var(--foreground);
+  --popover:          var(--surface-elevated);
+  --popover-foreground: var(--foreground);
+  --primary:          var(--foreground);
+  --primary-foreground: var(--background);
+  --secondary:        var(--surface-elevated);
+  --secondary-foreground: var(--foreground);
+  --muted-foreground: var(--muted);
+  --accent:           var(--surface-elevated);
+  --accent-foreground: var(--foreground);
+  --destructive:      var(--accent-blood);
+  --destructive-foreground: var(--foreground);
+  --input:            var(--surface-elevated);
+  --ring:             rgba(255, 255, 255, 0.2);
+}
+
+/* ─── BASE RESET + KILLERCLO DEFAULTS ───────────────────────────────────── */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  border-color: var(--border-subtle);
+}
+
+html {
+  color-scheme: dark;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.5;
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+
+/* Force dark on every element — no light mode */
+html,
+html[data-theme],
+.light,
+[data-theme="light"] {
+  background-color: var(--background) !important;
+  color: var(--foreground) !important;
+}
+
+/* ─── TYPOGRAPHY BASE ───────────────────────────────────────────────────── */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--foreground);
+}
+
+.font-display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-style: italic;
+  transform: skewX(-8deg);
+  display: inline-block;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+/* Prices & SKUs — tabular mono */
+.font-price {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+}
+
+/* ─── GLOBAL UTILITIES ──────────────────────────────────────────────────── */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Selection */
+::selection {
+  background-color: var(--accent-blood);
+  color: var(--foreground);
+}
+
+/* Focus ring */
+:focus-visible {
+  outline: 1px solid rgba(255, 255, 255, 0.4);
+  outline-offset: 2px;
+}
+
+/* ─── ANIMATIONS ────────────────────────────────────────────────────────── */
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slide-up {
+  from { transform: translateY(8px); opacity: 0; }
+  to   { transform: translateY(0);   opacity: 1; }
+}
+
+@keyframes slide-in-right {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0);    }
+}
+
+@keyframes slide-out-right {
+  from { transform: translateX(0);    }
+  to   { transform: translateX(100%); }
+}
+
+@keyframes slide-in-left {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(0);     }
+}
+
+@keyframes ticker {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes countdown-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0.4; }
+}
+
+.animate-fade-in        { animation: fade-in 120ms var(--animate-ease-out) both; }
+.animate-slide-up       { animation: slide-up 120ms var(--animate-ease-out) both; }
+.animate-slide-in-right { animation: slide-in-right 200ms var(--animate-ease-out) both; }
+.animate-slide-out-right{ animation: slide-out-right 200ms var(--animate-ease-in) both; }
+.animate-slide-in-left  { animation: slide-in-left 200ms var(--animate-ease-out) both; }
+.animate-ticker         { animation: ticker 20s linear infinite; }
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ─── COMPONENT PRIMITIVES ──────────────────────────────────────────────── */
+
+/* Killer border */
+.border-killer {
+  border: 1px solid var(--border-subtle);
+}
+
+/* Blood accent underline for active nav */
+.nav-active {
+  position: relative;
+}
+.nav-active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--accent-blood);
+}
+
+/* Product card image swap */
+.product-card-images {
+  position: relative;
+  overflow: hidden;
+}
+.product-card-images img:nth-child(2) {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 200ms var(--animate-ease-in-out);
+}
+.product-card-images:hover img:nth-child(2) {
+  opacity: 1;
+}
+.product-card-images:hover img:nth-child(1) {
+  opacity: 0;
+}
+
+/* Full-bleed section */
+.full-bleed {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+}
+
+/* ─── PRINT ─────────────────────────────────────────────────────────────── */
+@media print {
+  body {
+    background: white;
+    color: black;
+  }
+}
